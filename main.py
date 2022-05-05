@@ -20,7 +20,6 @@ collection = db["PO2022"]
 #Creo lista para enviar al front HTML
 datolista = []
 
-
 #Routes
 @app.route("/", methods=['GET', 'POST'])
 def Index():
@@ -39,11 +38,22 @@ def get_data(id):
   if request.method == 'POST':
     #Busco el objeto que recibí en la BD y lo envío a la pagina para editar
     user = collection.find_one({'_id':ObjectId(id)})
+    print(user)
     return render_template('editar.html', datos=list(user.values()), heads=list(user.keys()))
 
                            
 @app.route("/update/<id>", methods = ['GET', 'POST'])
 def actualiza_pedido(id):
+  if(request.form['fechaprogramada'] == ""):
+    fechaprog = "nan"
+  else:
+    fechaprog = int(request.form['fechaprogramada'][5:7])
+  
+  if(request.form['fechaliberacion'] == ""):
+    fechalib = "nan"
+  else:
+    fechalib = int(request.form['fechaliberacion'][5:7])
+  
   if request.method == 'POST':
     #estadopedido = request.form['estadopedido']
     newvalues = { "$set": { "Nuevo Key": request.form['nuevokey'],
@@ -51,7 +61,9 @@ def actualiza_pedido(id):
                            "Estado General":request.form['estadogral'],
                            "Comentario":request.form['comments'],
                            "Fecha programada":request.form['fechaprogramada'],
-                           "Fecha liberación":request.form['fechaliberacion']
+                           "MesProgramado (Calculada)":fechaprog,
+                           "Fecha liberación":request.form['fechaliberacion'],
+                           "Mes liberado (Calculado)":fechalib
                           } }
 
     #Busco el objeto seleccionado de mi front en la DB
