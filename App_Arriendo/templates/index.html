@@ -1,0 +1,143 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<!-- ###FORMULARIO DE INGRESO DE DATOS### --> 
+<form action="{{url_for('add_contact')}}" method="POST" class="row m-0 was-validated container px-3" validate>
+
+        <div class="col-sm-4 position-relative">
+            <label for="validationTooltip04" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Vendor de Arriendo:</span>
+                <select class="form-select" name="mediocontacto" id="validationTooltip04" required>
+                  <option selected disabled value="">Seleccione...</option>
+                  <option>TASA</option>
+                  <option>Claro</option>
+                  <option>Cooperativa</option>
+                  <option>Otro</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-sm-4 position-relative">
+            <label for="validationTooltip01" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Codigo de Sitio:</span>
+                <input type="text" class="form-control" name="codigositio" id="validationTooltip02" required>
+            </div>
+        </div>
+
+        <div class="col-md-4 position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Nombre de Sitio:</span>
+                <input type="text" class="form-control" name="nombresitio" id="validationTooltip02" required>
+            </div>
+        </div>
+
+        <div class="col-md-4 position-relative">
+            <label for="validationTooltip04" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Region:</span>
+                <select class="form-select" name="region" id="validationTooltip04" required>
+                  <option selected disabled value="">Seleccione...</option>
+                  <option>AMBA</option>
+                  <option>MEDI</option>
+                  <option>LITO</option>
+                  <option>SUR</option>
+                </select>
+            </div>
+        </div>
+
+       <div class="col-md-4 position-relative">
+            <label for="validationTooltip04" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Tipo de TX:</span>
+                <select class="form-select" name="tipotx" id="validationTooltip04" required>
+                <option selected disabled value="">Seleccione...</option>
+                <option>FullIP</option>
+                <option>E1</option>
+                <option>Otro</option>
+                </select>
+            </div>
+       </div>
+  
+       <div class="col-md-4 position-relative">
+            <label for="validationTooltip03" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">BW del Servicio:</span>
+                <input type="text" class="form-control" id="validationTooltipUsername" name="bw" aria-describedby="validationTooltipUsernamePrepend" required>
+            </div>
+       </div>
+  
+       <div class="col-sm-4 position-relative">
+            <label for="validationTooltip03" class="form-label"> </label>
+            <div class="input-group has-validation">
+              <span class="input-group-text" id="validationTooltipUsernamePrepend">Fecha Req Pedido:</span>
+              <input type="datetime-local" class="form-control" id="validationTooltipUsername" name="fechapedido" aria-describedby="validationTooltipUsernamePrepend" required>
+            </div>
+       </div>
+       
+
+       <div>
+       </div>
+
+      <div class="mb-3">
+        <label for="validationTextarea" class="form-label"></label>
+        <span class="input-group-text" id="validationTooltipUsernamePrepend">Detalle del pedido:</span>
+        <textarea class="form-control is-invalid" id="validationTextarea" name="detallepedido" placeholder="Detalle de pedido (Requerido)" required></textarea>
+      </div>
+
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Guardar Registro</button>
+  </div>
+</form>
+
+<div>
+ 
+</div>
+
+<!-- ###TABLA LISTA CONTACTOS### --> 
+<div class="col-sm">
+  <table class="table table-dark table-striped table-hover table-bordered table-sm bg-white">
+    <thead>
+      <tr>
+        <td>ID</td>
+        <td>Vendor de Arriendo</td>
+        <td>Codigo Sitio</td>
+        <td>Nombre Sitio</td>
+        <td>Region</td>
+        <td>Tipo Tx</td>
+        <td>BW</td>
+        <td>Fecha Req Pedido</td>
+        <td>Detalle de pedido</td>
+        <td>Fecha carga pedido</td>
+         <td>Operations</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for contacto in contactos %}
+      <tr>
+        <td>{{contacto.0}}</td>
+        <td>{{contacto.1}}</td>
+        <td>{{contacto.2}}</td>
+        <td>{{contacto.3}}</td>
+        <td>{{contacto.4}}</td>
+        <td>{{contacto.5}}</td>
+        <td>{{contacto.6}}</td>
+        <td>{{contacto.7}}</td>
+        <td>{{contacto.8}}</td>
+        <td>{{contacto.9}}</td>
+        <td>{{contacto.10}}</td>
+        <td>{{contacto.11}}</td>
+        <td>
+          <a href="" class="btn btn-sm btn-primary btn-success">edit</a>
+          <a href="/delete/{{contacto.0}}" class="btn btn-sm btn-danger btn-delete">delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div>   </div>
+</div>
+
+{% endblock %}

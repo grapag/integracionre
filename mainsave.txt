@@ -1,0 +1,29 @@
+import flask
+from flask import Flask, render_template, request, redirect, url_for, flash
+from replit import db, web
+import pandas as pd
+import pymongo
+from pymongo import MongoClient
+
+# -- Create & configure Flask application.
+app = flask.Flask(__name__)
+
+users = web.UserStore()
+
+# Apertura de Google Sheets
+sheet_id = '1K7lZU2GvKeLwcZ4Ea71OuS5lalAa0y7V'
+df = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv")
+#Conversion de datos a diccionario
+datogs = df.values.tolist()
+namecolumn = df.columns
+print (namecolumn)
+
+@app.route("/", methods=['GET', 'POST'])
+def Index():
+    return flask.render_template("index.html", datos = datogs, heads = namecolumn)
+
+  
+# starting the app
+if __name__ == "__main__":
+    #app.run(debug=true)
+    web.run(app)
