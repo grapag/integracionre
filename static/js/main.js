@@ -1,15 +1,26 @@
-var chart = Highcharts.chart('container', {
+const url = 'https://integracionre.gastongrapu.repl.co/my-first-api';
+
+
+fetch(url)
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+
+  // COMIENZO TODO EL HIGHCHART
+  var chart = Highcharts.chart('container', {
 
   chart: {
     type: 'column'
   },
 
   title: {
-    text: 'Highcharts responsive chart'
+    text: 'titulo del grafico'
   },
 
   subtitle: {
-    text: 'Resize the frame or click buttons to change appearance'
+    text: data["serie1_nombre"]
   },
 
   legend: {
@@ -74,7 +85,7 @@ var chart = Highcharts.chart('container', {
     }]
   }
 });
-
+    
 document.getElementById('small').addEventListener('click', function () {
   chart.setSize(400);
 });
@@ -85,4 +96,18 @@ document.getElementById('large').addEventListener('click', function () {
 
 document.getElementById('auto').addEventListener('click', function () {
   chart.setSize(null);
-});
+});    
+    
+    
+    
+ // TERMINO TODO EL HIGHCHART   
+    
+    return;
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+
+
+

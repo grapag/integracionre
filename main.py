@@ -1,5 +1,6 @@
 import flask
-from flask import Flask, render_template, request, redirect, url_for, flash, Response
+from flask import Flask, render_template, redirect, url_for, flash
+from flask import jsonify, request, send_file
 from replit import db, web
 #import pandas as pd
 import pymongo
@@ -19,6 +20,28 @@ collection = db["PO2022"]
 
 #Creo lista para enviar al front HTML
 datolista = []
+
+#OTRA RUTA
+@app.route('/my-first-api', methods = ['GET'])
+def hello():
+  name = request.args.get('name')
+
+  xaxis = ['Apples', 'Oranges', 'Bananas']
+  serie1_nombre = "sogan" 
+  serie1_data = [8, 4, 3]
+  
+  if name is None:
+    text = 'Hello!'
+
+  else:
+    text = 'Hello ' + name + '!'
+
+  return jsonify({"xaxis": xaxis,
+                 "serie1_nombre" : serie1_nombre,
+                 "serie1_data" : serie1_data})
+
+
+
 
 #Routes
 @app.route("/", methods=['GET', 'POST'])
