@@ -10,7 +10,6 @@ from bson.objectid import ObjectId
 
 # Crear & configurar Flask app.
 app = Flask(__name__)
-
 users = web.UserStore()
 
 # CONEXION A MONGODB ATLAS
@@ -18,32 +17,62 @@ client = pymongo.MongoClient("mongodb+srv://ggrapunsky:Tiburonloco12@cluster0.hz
 db = client["bdreip"]
 collection = db["PO2022"]
 
-#Creo lista para enviar al front HTML
+#CREO LISTA PARA ENVIAR AL FRONT HTML
 datolista = []
 
-#OTRA RUTA
+
+#API QUE ALIMENTA AL GRAFICO
 @app.route('/my-first-api', methods = ['GET'])
-def hello():
-  name = request.args.get('name')
+def create_graph():
+  altas = []
+  ampliacion = []
+  reemplazo = []
+  cliente = []
+  pendientes =0
+  valores_alta = []
+  valores_ampliacion = []
+  valores_reemplazo = []
+  valores_cliente = []
+  valores_pendientes = [0,0,0,0,0,0,0,0,0,0,0,0]
 
-  xaxis = ['Apples', 'Oranges', 'Bananas']
-  serie1_nombre = "sogan" 
-  serie1_data = [8, 4, 3]
+  ##Busco data para API desde la DB - ARMAR FUNCION
+  for user in collection.find({"Tipo [ALTA/AMPL]":"Alta"}):
+    altas.append(int(user["Fecha programada"][5:7]))
+
+  for user in collection.find({"Tipo [ALTA/AMPL]":"Ampliacion"}):
+    ampliacion.append(int(user["Fecha programada"][5:7]))
+    
+  for user in collection.find({"Tipo [ALTA/AMPL]":"Reemplazo"}):
+    reemplazo.append(int(user["Fecha programada"][5:7]))  
+
+  for user in collection.find({"Tipo [ALTA/AMPL]":"Cliente"}):
+    cliente.append(int(user["Fecha programada"][5:7]))
+
+  for user in collection.find({"$or": [
+                              {"Tipo [ALTA/AMPL]": {'$eq': float('NaN')}},
+                              {"Tipo [ALTA/AMPL]": {'$eq': "nan"}}  
+                              ]}):
+    pendientes = pendientes + 1
+  valores_pendientes.append(pendientes)
+
+  #Ordeno data para enviar a la API - ARMAR FUNCION
+  for i in range(1,13):
+    valores_alta.append(altas.count(i))
+    valores_ampliacion.append(ampliacion.count(i))
+    valores_reemplazo.append(reemplazo.count(i))
+    valores_cliente.append(cliente.count(i))
   
-  if name is None:
-    text = 'Hello!'
-
-  else:
-    text = 'Hello ' + name + '!'
-
-  return jsonify({"xaxis": xaxis,
-                 "serie1_nombre" : serie1_nombre,
-                 "serie1_data" : serie1_data})
+  return jsonify({
+                 "valores_alta" : valores_alta,
+                 "valores_ampliacion" : valores_ampliacion,
+                 "valores_reemplazo" : valores_reemplazo,
+                 "valores_cliente" : valores_cliente,
+                 "valores_pendientes" : valores_pendientes})
 
 
 
 
-#Routes
+#ROUTES
 @app.route("/", methods=['GET', 'POST'])
 def Index():
   #Limpio la lista, para cargarla luego de las actualizaciones
@@ -59,7 +88,7 @@ def Index():
 @app.route('/edit/<id>', methods = ['POST', 'GET'])
 def get_data(id):
   if request.method == 'POST':
-    #Busco el objeto que recibí en la BD y lo envío a la pagina para editar
+    #Busco el objeto que recibí en la BD y lo envío al HTML para editar
     user = collection.find_one({'_id':ObjectId(id)})
     print(user)
     return render_template('editar.html', datos=list(user.values()), heads=list(user.keys()))
