@@ -37,20 +37,33 @@ def create_graph():
 
   ##Busco data para API desde la DB - ARMAR FUNCION
   for user in collection.find({"Tipo [ALTA/AMPL]":"Alta"}):
-    altas.append(int(user["Fecha programada"][5:7]))
+    if(user["Fecha programada"] == ""):
+      pass
+    else:
+      altas.append(int(user["Fecha programada"][5:7]))
 
   for user in collection.find({"Tipo [ALTA/AMPL]":"Ampliacion"}):
-    ampliacion.append(int(user["Fecha programada"][5:7]))
+    if(user["Fecha programada"] == ""):
+      pass
+    else:
+      ampliacion.append(int(user["Fecha programada"][5:7]))    
     
   for user in collection.find({"Tipo [ALTA/AMPL]":"Reemplazo"}):
-    reemplazo.append(int(user["Fecha programada"][5:7]))  
+    if(user["Fecha programada"] == ""):
+      pass
+    else:
+      reemplazo.append(int(user["Fecha programada"][5:7]))  
 
   for user in collection.find({"Tipo [ALTA/AMPL]":"Cliente"}):
-    cliente.append(int(user["Fecha programada"][5:7]))
+    if(user["Fecha programada"] == ""):
+      pass
+    else:
+      cliente.append(int(user["Fecha programada"][5:7]))
 
   for user in collection.find({"$or": [
-                              {"Tipo [ALTA/AMPL]": {'$eq': float('NaN')}},
-                              {"Tipo [ALTA/AMPL]": {'$eq': "nan"}}  
+                              {"Fecha programada": {'$eq': float('NaN')}},
+                              {"Fecha programada": {'$eq': ""}},
+                              {"Fecha programada": {'$eq': "nan"}}  
                               ]}):
     pendientes = pendientes + 1
   valores_pendientes.append(pendientes)
@@ -96,6 +109,9 @@ def get_data(id):
                            
 @app.route("/update/<id>", methods = ['GET', 'POST'])
 def actualiza_pedido(id):
+  #print(request.form['fechaprogramada'])
+  #print(type(request.form['fechaprogramada']))
+  
   if(request.form['fechaprogramada'] == ""):
     fechaprog = "nan"
   else:
