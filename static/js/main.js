@@ -7,10 +7,11 @@ const refreshButton = document.querySelector('#refreshButton')
     .then(response => response.json())
     .then(data => {
       //createChart(data); //Funcion que crea el gráfico con los datos actualizados
-        var chart = Highcharts.chart('container', {
+      //CREACION DE BAR CHART
+        var chart = Highcharts.chart('container_barChart', {
   
           chart: {
-            type: 'column'
+            type: 'column',
           },
         
           title: {
@@ -103,6 +104,57 @@ const refreshButton = document.querySelector('#refreshButton')
         document.getElementById('auto').addEventListener('click', function () {
           chart.setSize(null);
         });
+
+      //CREACION DE PIE CHART
+      Highcharts.chart('container_pieChart', {
+  chart: {
+    plotBackgroundColor: null,
+    plotBorderWidth: null,
+    plotShadow: false,
+    type: 'pie',
+  },
+  title: {
+    text: 'Estado General'
+  },
+  accessibility: {
+    point: {
+      valueSuffix: 'decimals'
+    }
+  },
+  plotOptions: {
+    pie: {
+      allowPointSelect: true,
+      cursor: 'pointer',
+      dataLabels: {
+        enabled: false
+      },
+      showInLegend: true
+    }
+  },
+  series: [{
+    name: 'Cantidad',
+    colorByPoint: true,
+    data: [{
+      name: 'No Iniciado',
+      y: data["estadoGral_NI"],
+      sliced: true,
+      selected: true
+    }, {
+      name: 'En Construccion',
+      y: data["estadoGral_EC"]
+    }, {
+      name: 'En Liberacion',
+      y: data["estadoGral_EL"]
+    }, {
+      name: 'Liberado',
+      y: data["estadoGral_LI"]
+    }, {
+      name: 'Pendiente',
+      y: data["estadoGral_PE"]
+    }]
+  }]
+});
+
     })
     //Fin graficos
     .catch(err => console.log(err));

@@ -33,8 +33,13 @@ def create_graph():
   valores_reemplazo = []
   valores_cliente = []
   valores_pendientes = [0,0,0,0,0,0,0,0,0,0,0,0]
+  estadoGral_NI=0
+  estadoGral_EC=0
+  estadoGral_EL=0
+  estadoGral_LI=0
+  estadoGral_PE=0
 
-  ##Busco data para API desde la DB - ARMAR FUNCION
+  ##Busco data del grafico Bar para API desde la DB - ARMAR FUNCION
   for user in collection.find({"Tipo [ALTA/AMPL]":"Alta"}):
     if(user["Fecha programada"] == ""):
       pass
@@ -67,8 +72,21 @@ def create_graph():
     pendientes = pendientes + 1
   valores_pendientes.append(pendientes)
 
-      
-  
+
+  ##Busco data del grafico Torta para API desde la DB - ARMAR FUNCION
+  for user in collection.find({"Estado General":{ "$exists" : True }}):
+    if(user["Estado General"] == "No Iniciado"):
+      estadoGral_NI += 1
+    elif (user["Estado General"] == "En Construccion"):
+      estadoGral_EC += 1
+    elif (user["Estado General"] == "En Liberacion"):
+      estadoGral_EL += 1
+    elif (user["Estado General"] == "Liberado"):
+      estadoGral_LI += 1
+    else: #Caso donde el estado Gral es Vacio o Null => Pendiente
+      estadoGral_PE += 1
+
+
   #Ordeno data para enviar a la API - ARMAR FUNCION
   for i in range(1,13):
     valores_alta.append(altas.count(i))
@@ -82,9 +100,13 @@ def create_graph():
                  "valores_ampliacion" : valores_ampliacion,
                  "valores_reemplazo" : valores_reemplazo,
                  "valores_cliente" : valores_cliente,
-                 "valores_pendientes" : valores_pendientes})
-
-
+                 "valores_pendientes" : valores_pendientes,
+                 "estadoGral_NI": estadoGral_NI,
+                 "estadoGral_EC": estadoGral_EC,
+                 "estadoGral_EL": estadoGral_EL,
+                 "estadoGral_LI": estadoGral_LI,
+                 "estadoGral_PE": estadoGral_PE,
+  })
 
 
 #ROUTES
