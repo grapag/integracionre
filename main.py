@@ -122,6 +122,18 @@ def Index():
   return flask.render_template("index.html", datos=datolista, heads=listaheads)
 
 
+@app.route("/imadmin", methods=['GET', 'POST'])
+def Index_admin():
+  #Limpio la lista, para cargarla luego de las actualizaciones
+  datolista.clear()
+  for document in collection.find({}):
+    #Armo lista de documentos que vienen de la BD para enviar al Front
+    datolista.append(document)
+  #Lista de las cabeceras del diccionario
+  listaheads = list(datolista[0].keys())      
+  return flask.render_template("index_admin.html", datos=datolista, heads=listaheads)
+
+  
 @app.route('/edit/<id>', methods = ['POST', 'GET'])
 def get_data(id):
   if request.method == 'POST':
@@ -164,7 +176,7 @@ def actualiza_pedido(id):
     collection.update_one(user, newvalues)
     print("DB UPDATED")
         
-    return redirect(url_for('Index'))
+    return redirect(url_for('Index_admin'))
 
 
 @app.route('/download', methods = ['GET'])
