@@ -92,26 +92,29 @@
   </div>
 </form>
 
-<!-- ###GRAFICA HIGHCHARTS### --> 
-<div>
-  <figure class="highcharts-barChart">
-    <div id="container_barChart"></div>
-  </figure>
-  <figure class="highcharts-pieChart">
-    <div id="container_pieChart"></div>
-  </figure>
-</div>
+<!-- ###GRAFICA HIGHCHARTS### -->
+  <body>     
+    <div class="row md-6 container">
+            <!--First chart-->
+      <div class="col-md-6">      
+        <div id="container_pieChart" style="min-width: 400px; height: 300px; margin: 30 auto"></div>   
+      </div>
+                <!--Second chart-->
+      <div class="col-md-6">
+        <div id="container_barChart" style="min-width: 600px; height: 300px; margin: 30 auto"></div>
+      </div>
+                <!--End of charts-->
+    </div><!--for container div-->
+  </body>
 
-
-<div id="button-bar" class="col-4">
-  <button id="small">Small</button>
-  <button id="large">Large</button>
-  <button id="auto">Auto</button>
-  <div>
-    <button id="refreshButton">Refrescar Grafico</button>
+<div id="button-bar" class="col-md-4">
+    <button id="small">Small</button>
+    <button id="large">Large</button>
+    <button id="auto">Auto</button>
+    <div>
+      <button id="refreshButton">Refrescar Grafico</button>
+    </div>
   </div>
-</div>
-
 
 <!-- ###FIN GRAFICA HIGHCHARTS### --> 
 
