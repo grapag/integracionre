@@ -1,4 +1,4 @@
-const url = 'https://integracionre.gastongrapu.repl.co/my-first-api';
+const url = 'https://integracionre.gastongrapu.repl.co/api';
 const refreshButton = document.querySelector('#refreshButton')
 //const createChart = require('./createChart.js');
 

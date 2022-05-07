@@ -1,11 +1,10 @@
 import flask
 from flask import Flask, render_template, redirect, url_for, flash
-from flask import jsonify, request, send_file
+from flask import jsonify, request, send_file, make_response
+from io import StringIO 
+import csv
 from replit import db, web
-#import pandas as pd
 import pymongo
-from pymongo import MongoClient
-from bson import json_util
 from bson.objectid import ObjectId
 
 # Crear & configurar Flask app.
@@ -22,7 +21,7 @@ datolista = []
 
 
 #API QUE ALIMENTA AL GRAFICO
-@app.route('/my-first-api', methods = ['GET'])
+@app.route('/api', methods = ['GET'])
 def create_graph():
   altas = []
   ampliacion = []
@@ -68,13 +67,16 @@ def create_graph():
     pendientes = pendientes + 1
   valores_pendientes.append(pendientes)
 
+      
+  
   #Ordeno data para enviar a la API - ARMAR FUNCION
   for i in range(1,13):
     valores_alta.append(altas.count(i))
     valores_ampliacion.append(ampliacion.count(i))
     valores_reemplazo.append(reemplazo.count(i))
     valores_cliente.append(cliente.count(i))
-  
+
+  #Devuelvo API JSON
   return jsonify({
                  "valores_alta" : valores_alta,
                  "valores_ampliacion" : valores_ampliacion,
@@ -141,6 +143,33 @@ def actualiza_pedido(id):
     print("DB UPDATED")
         
     return redirect(url_for('Index'))
+
+
+@app.route('/download', methods = ['GET'])
+def post():
+  csvList=[]
+  index = 0
+  #Consulto la DB para armar los datos a enviar al exportador de CSV
+  for document in collection.find({}):
+    if (index == 0): #Si es el primero, armo los headers del archivo
+      listOfKeys = document.keys()
+      listOfKeys = list(listOfKeys)
+      csvList.append(listOfKeys)
+      index = 1
+    else:
+      pass
+    #Armo lista de lista de valores del archivo csv [rows]
+    listOfValues = document.values()
+    listOfValues = list(listOfValues)
+    csvList.append(listOfValues)
+  #Comienzo con la exportacion del CSV
+  si = StringIO()
+  cw = csv.writer(si)
+  cw.writerows(csvList)
+  output = make_response(si.getvalue())
+  output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+  output.headers["Content-type"] = "text/csv"
+  return output
 
 
 # Inicializando la app
