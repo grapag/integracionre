@@ -7,6 +7,7 @@ from replit import db, web
 import pymongo
 from bson.objectid import ObjectId
 
+
 # Crear & configurar Flask app.
 app = Flask(__name__)
 users = web.UserStore()
@@ -167,7 +168,8 @@ def actualiza_pedido(id):
                            "Fecha programada":request.form['fechaprogramada'],
                            "MesProgramado (Calculada)":fechaprog,
                            "Fecha liberación":request.form['fechaliberacion'],
-                           "Mes liberado (Calculado)":fechalib
+                           "Mes liberado (Calculado)":fechalib,
+                           "Integrador":request.form['integrador']
                           } }
 
     #Busco el objeto seleccionado de mi front en la DB

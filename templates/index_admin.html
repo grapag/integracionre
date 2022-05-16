@@ -96,12 +96,16 @@
   <body>     
     <div class="row md-6 container">
             <!--First chart-->
-      <div class="col-md-6">      
-        <div id="container_pieChart" style="min-width: 400px; height: 300px; margin: 30 auto"></div>   
+      <div class="col-md-6"> 
+        <div id="container_pieChart" style="min-width: 400px; height: 300px; margin: 30 auto"></div>    
       </div>
                 <!--Second chart-->
       <div class="col-md-6">
-        <div id="container_barChart" style="min-width: 600px; height: 300px; margin: 30 auto"></div>
+        <div id="container_barChart" style="min-width: 600px; height: 300px; margin: 30 auto"></div>         
+      </div>
+                <!--Third chart-->
+      <div class="col-md-6">
+      <div id="container_barChartxIntegrador" style="min-width: 1250px; height: 400px; margin: 30 auto"></div> 
       </div>
                 <!--End of charts-->
     </div><!--for container div-->
@@ -154,6 +158,7 @@
         <td>{{heads.35}}</td>
         <td>{{heads.36}}</td>
         <td>{{heads.37}}</td>
+        <td>{{heads.38}}</td>
          <td>Operations</td>
       </tr>
     </thead>
@@ -182,7 +187,7 @@
             <td><dd>{{dato['Fecha programada']}}</dd></td>
             <td><dd>{{dato['MesProgramado (Calculada)']}}</dd></td>
             <td><dd>{{dato['Fecha liberación']}}</dd></td>
-                    <td>{{dato['Mes liberado (Calculado)']}}
+            <td><dd>{{dato['Mes liberado (Calculado)']}}</dd></td>
         <!--  <Form action="/update/{{dato['_id']}}" method = "post">
             <select class="form-select" name="estadopedido" id="validationTooltip04" required>
               <option selected disabled value="">Seleccione...</option>
@@ -192,6 +197,7 @@
             <input type="submit" value="Submit">
           </form>
         </td>         --> 
+            <td><dd>{{dato['Integrador']}}</dd></td>
             <td>
               <Form action="/edit/{{dato['_id']}}" method="POST"> 
                 <input type="submit" class="btn btn-sm btn-primary btn-success" value="Edit">
