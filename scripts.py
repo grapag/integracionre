@@ -7,7 +7,10 @@ db = client["bdreip"]
 collection = db["PO2022"]
 
 #Listo todos los campos de la DB
-for user in collection.find({}):
+#for user in collection.find({}):
  #Actualizo y si no está creo el valor nuevo con su key
-  collection.update_one(user, { "$set": { "Integrador":"nan"}})
-  print("DB UPDATED")
+ # collection.update_one(user, { "$set": { "Integrador":"nan"}})
+ultimo = collection.find().sort("_id", -1).limit(1)
+lista = list(ultimo)
+print(lista[0]["ID"])
+print("DB UPDATED")

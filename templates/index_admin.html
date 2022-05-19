@@ -2,35 +2,19 @@
 {% block body %}
 
 <!-- ###FORMULARIO DE INGRESO DE DATOS### --> 
-<form action="" method="POST" class="row m-0 was-validated container px-3" validate>
+<form action="{{ url_for('agrega_pedido') }}" method="GET" class="row m-0 was-validated container px-3" validate>
 
         <div class="col-sm-4 position-relative">
             <label for="validationTooltip04" class="form-label"> </label>
             <div class="input-group has-validation">
-                <span class="input-group-text" id="validationTooltipUsernamePrepend">Vendor de Arriendo:</span>
-                <select class="form-select" name="mediocontacto" id="validationTooltip04" required>
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">PO2022:</span>
+                <select class="form-select" name="po2022" id="validationTooltip04" required>
                   <option selected disabled value="">Seleccione...</option>
-                  <option>TASA</option>
-                  <option>Claro</option>
-                  <option>Cooperativa</option>
-                  <option>Otro</option>
+                  <option>CO2021</option>
+                  <option>PO2022_OBS</option>
+                  <option>PO2022_REIP</option>
+                  <option>PO2022_REIP_Cliente</option>
                 </select>
-            </div>
-        </div>
-
-        <div class="col-sm-4 position-relative">
-            <label for="validationTooltip01" class="form-label"> </label>
-            <div class="input-group has-validation">
-                <span class="input-group-text" id="validationTooltipUsernamePrepend">Codigo de Sitio:</span>
-                <input type="text" class="form-control" name="codigositio" id="validationTooltip02" required>
-            </div>
-        </div>
-
-        <div class="col-md-4 position-relative">
-            <label for="validationTooltip02" class="form-label"> </label>
-            <div class="input-group has-validation">
-                <span class="input-group-text" id="validationTooltipUsernamePrepend">Nombre de Sitio:</span>
-                <input type="text" class="form-control" name="nombresitio" id="validationTooltip02" required>
             </div>
         </div>
 
@@ -51,40 +35,79 @@
        <div class="col-md-4 position-relative">
             <label for="validationTooltip04" class="form-label"> </label>
             <div class="input-group has-validation">
-                <span class="input-group-text" id="validationTooltipUsernamePrepend">Tipo de TX:</span>
-                <select class="form-select" name="tipotx" id="validationTooltip04" required>
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Marca_A:</span>
+                <select class="form-select" name="marcaa" id="validationTooltip04" required>
                 <option selected disabled value="">Seleccione...</option>
-                <option>FullIP</option>
-                <option>E1</option>
-                <option>Otro</option>
+                <option>Alcatel</option>
+                <option>Ceragon</option>
+                <option>Dragon Wave</option>
+                <option>Ericsson</option>
+                <option>Huawei</option>
+                <option>Sagem</option>
+                <option>Siae</option>
                 </select>
             </div>
        </div>
-  
+
+        <div class="col-sm-4 position-relative">
+            <label for="validationTooltip01" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Key:</span>
+                <input type="text" class="form-control" name="key" id="validationTooltip02" required>
+            </div>
+        </div>
+
        <div class="col-md-4 position-relative">
-            <label for="validationTooltip03" class="form-label"> </label>
+            <label for="validationTooltip04" class="form-label"> </label>
             <div class="input-group has-validation">
-                <span class="input-group-text" id="validationTooltipUsernamePrepend">BW del Servicio:</span>
-                <input type="text" class="form-control" id="validationTooltipUsername" name="bw" aria-describedby="validationTooltipUsernamePrepend" required>
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Accion_Planif:</span>
+                <select class="form-select" name="accionplanif" id="validationTooltip04" required>
+                <option selected disabled value="">Seleccione...</option>
+                <option>Ampliacion</option>
+                <option>Cambio IDU</option>
+                <option>Reemplazo</option>
+                <option>SinDatos</option>
+                </select>
             </div>
        </div>
+
+        <div class="col-md-4 position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Nodo_A:</span>
+                <input type="text" class="form-control" name="nodoa" id="validationTooltip02" required>
+            </div>
+        </div>
+
+        <div class="col-md-4 position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Nodo_B:</span>
+                <input type="text" class="form-control" name="nodob" id="validationTooltip02" required>
+            </div>
+        </div>
+
+        <div class="col-md-4 position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Nombre_A:</span>
+                <input type="text" class="form-control" name="nombrea" id="validationTooltip02" required>
+            </div>
+        </div>
+
+        <div class="col-md-4 position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Nombre_B:</span>
+                <input type="text" class="form-control" name="nombreb" id="validationTooltip02" required>
+            </div>
+        </div>
+
   
-       <div class="col-sm-4 position-relative">
-            <label for="validationTooltip03" class="form-label"> </label>
-            <div class="input-group has-validation">
-              <span class="input-group-text" id="validationTooltipUsernamePrepend">Fecha Req Pedido:</span>
-              <input type="datetime-local" class="form-control" id="validationTooltipUsername" name="fechapedido" aria-describedby="validationTooltipUsernamePrepend" required>
-            </div>
-       </div>
-       
-
-       <div>
-       </div>
-
       <div class="mb-3">
         <label for="validationTextarea" class="form-label"></label>
-        <span class="input-group-text" id="validationTooltipUsernamePrepend">Detalle del pedido:</span>
-        <textarea class="form-control is-invalid" id="validationTextarea" name="detallepedido" placeholder="Detalle de pedido (Requerido)" required></textarea>
+        <span class="input-group-text" id="validationTooltipUsernamePrepend">Observacion PO2022:</span>
+        <textarea class="form-control is-invalid" id="validationTextarea" name="obspo2022" placeholder="Detalle de observacion (Requerido)" required></textarea>
       </div>
 
   <div class="col-12">

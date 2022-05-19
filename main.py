@@ -181,6 +181,78 @@ def actualiza_pedido(id):
     return redirect(url_for('Index_admin'))
 
 
+@app.route('/add', methods = ['GET', 'POST'])
+def agrega_pedido():
+  #Busca el ultimo registro para identificar el nro de ID
+  ultimo = collection.find().sort("_id", -1).limit(1)
+  ultimo_id = list(ultimo)[0]["ID"]
+
+  #Calcula el TIPO RE
+  if(request.values.get('po2022') == "PO2022_RELH"):
+    tipore = "RELH"
+  else:
+    tipore = "REIP"
+
+  #Calcula si es RE CLIENTE
+  if(request.values.get('po2022') == "PO2022_REIP_Cliente"):
+    escliente = "Si"
+  else:
+    escliente = "nan"
+
+  #Calcula los CDL desde los Nodos ingresados
+  cdla = request.values.get('nodoa')[0:3]
+  cdlb = request.values.get('nodob')[0:3]
+  acronimos = request.values.get('key').split("-")
+  
+  if request.method == 'GET':
+    #Nuevos valores que se ingresarán a la BD
+    newvalues = { "ID": ultimo_id+1,
+                  "Tipo RE": tipore,
+                  "Key":request.values.get('key'),
+                  "Tipo Plan de Obra":"nan",
+                  "PO2022":request.values.get('po2022'),
+                  "Version":"nan",
+                  "Accion_Planif":request.values.get('accionplanif'),
+                  "Config Obj Planif":"nan",
+                  "Observacion PO2022":request.values.get('obspo2022'),
+                  "Es para un cliente?": escliente,
+                  "Q Planificado":"nan",
+                  "Region":request.values.get('region'),
+                  "Provincia_A":"nan",
+                  "Provincia_B":"nan",
+                  "Nodo A":request.values.get('nodoa'),
+                  "Nodo B":request.values.get('nodob'),
+                  "Acronimo_A": acronimos[0],
+                  "Marca_A":"nan",
+                  "Modelo_A":"nan",
+                  "CDL_A": cdla,
+                  "SLS_A":"nan",
+                  "Nombre_A":request.values.get('nombrea'),
+                  "Acronimo_B": acronimos[1],
+                  "Vendor_B":"nan",
+                  "Modelo_B":"nan",
+                  "CDL_B": cdlb,
+                  "SLS_B":"nan",
+                  "Nombre_B":request.values.get('nombreb'),
+                  "Total (USD)":"nan",
+                  "Nuevo Key":"nan", ##VALORES QUE INGRESAN X WEB
+                  "Tipo [ALTA/AMPL]":"nan",
+                  "Estado General":"nan",
+                  "Comentario":"nan",
+                  "Fecha programada":"nan",
+                  "MesProgramado (Calculada)":"nan",
+                  "Fecha liberación":"nan",
+                  "Mes liberado (Calculado)":"nan",
+                  "Integrador":"nan"
+                }
+
+  #Inserto en la DB los nuevos valores
+  collection.insert_one(newvalues)
+  print("DB UPDATED")
+        
+  return redirect(url_for('Index_admin'))
+
+
 @app.route('/download', methods = ['GET'])
 def post():
   csvList=[]
