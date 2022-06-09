@@ -282,6 +282,6 @@ def post():
 
 # Inicializando la app
 if __name__ == "__main__":
-  web.run(app, debug=True)
+  web.run(app, debug=False)
 
 

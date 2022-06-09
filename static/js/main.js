@@ -112,11 +112,11 @@ const refreshButton = document.querySelector('#refreshButton')
         text: 'Combination chart'
       },
       xAxis: {
-        categories: ['Apples', 'Oranges', 'Pears', 'Bananas', 'Plums']
+        categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo']
       },
       labels: {
         items: [{
-          html: 'Total fruit consumption',
+          html: 'Integ Total x Persona',
           style: {
             left: '50px',
             top: '18px',
@@ -129,17 +129,21 @@ const refreshButton = document.querySelector('#refreshButton')
       },
       series: [{
         type: 'column',
-        name: 'Jane',
+        name: 'E.Barbero',
         data: [3, 2, 1, 3, 4]
       }, {
         type: 'column',
-        name: 'John',
+        name: 'E.Lorenzo',
         data: [2, 3, 5, 7, 6]
       }, {
         type: 'column',
-        name: 'Joe',
+        name: 'J.Vilar',
         data: [4, 3, 3, 9, 0]
       }, {
+        type: 'column',
+        name: 'J.Schmukler',
+        data: [5, 3, 4, 8, 2]
+      }, /*{
         type: 'spline',
         name: 'Average',
         data: [3, 2.67, 3, 6.33, 3.33],
@@ -148,21 +152,25 @@ const refreshButton = document.querySelector('#refreshButton')
           lineColor: Highcharts.getOptions().colors[3],
           fillColor: 'white'
         }
-      }, {
+      },*/ {
         type: 'pie',
-        name: 'Total consumption',
+        name: 'Total',
         data: [{
-          name: 'Jane',
-          y: 13,
+          name: 'E.Barbero',
+          y: 12,
           color: Highcharts.getOptions().colors[0] // Jane's color
         }, {
-          name: 'John',
-          y: 23,
+          name: 'E.Lorenzo',
+          y: 10,
           color: Highcharts.getOptions().colors[1] // John's color
         }, {
-          name: 'Joe',
-          y: 19,
+          name: 'J.Vilar',
+          y: 17,
           color: Highcharts.getOptions().colors[2] // Joe's color
+        }, {
+          name: 'J.Schmukler',
+          y: 18,
+          color: Highcharts.getOptions().colors[3] // Joe's color
         }],
         center: [100, 80],
         size: 100,
