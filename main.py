@@ -28,7 +28,7 @@ def create_graph():
   ampliacion = []
   reemplazo = []
   cliente = []
-  pendientes =0
+  pendientes=0
   valores_alta = []
   valores_ampliacion = []
   valores_reemplazo = []
@@ -39,6 +39,10 @@ def create_graph():
   estadoGral_EL=0
   estadoGral_LI=0
   estadoGral_PE=0
+  alorenzo_prodxmes = []
+  ebarbero_prodxmes = []
+  jvilar_prodxmes = []
+  jschmukler_prodxmes = []
 
   ##Busco data del grafico Bar para API desde la DB - ARMAR FUNCION
   for user in collection.find({"Tipo [ALTA/AMPL]":"Alta"}):
@@ -88,13 +92,46 @@ def create_graph():
       estadoGral_PE += 1
 
 
-  #Ordeno data para enviar a la API - ARMAR FUNCION
+  ##Busco data para armar el grafico de produccion x integrador - ARMAR FUNCION
+  for i in range(1,13):
+    alorenzo_prod = 0
+    ebarbero_prod = 0
+    jvilar_prod = 0
+    jschmukler_prod = 0
+    for user in collection.find({"Estado General":"Liberado", "Mes liberado (Calculado)":i}):
+      if(user["Integrador"] == "Andres Lorenzo"):
+        alorenzo_prod += 1
+      elif (user["Integrador"] == "Enzo Barbero"):
+        ebarbero_prod += 1
+      elif (user["Integrador"] == "Javier Vilar"):
+        jvilar_prod += 1
+      elif (user["Integrador"] == "Jorge Schmukler"):
+        jschmukler_prod += 1
+      else: 
+        pass
+    alorenzo_prodxmes.append(alorenzo_prod)
+    ebarbero_prodxmes.append(ebarbero_prod)
+    jvilar_prodxmes.append(jvilar_prod)
+    jschmukler_prodxmes.append(jschmukler_prod)
+  
+
+  #Ordeno data del bar char para enviar a la API - ARMAR FUNCION
+  valor_alorenzo_prod = 0
+  valor_ebarbero_prod = 0
+  valor_jvilar_prod = 0
+  valor_jschmukler_prod = 0
+  
   for i in range(1,13):
     valores_alta.append(altas.count(i))
     valores_ampliacion.append(ampliacion.count(i))
     valores_reemplazo.append(reemplazo.count(i))
     valores_cliente.append(cliente.count(i))
-
+    valor_alorenzo_prod += alorenzo_prodxmes[i-1]
+    valor_ebarbero_prod += ebarbero_prodxmes[i-1]
+    valor_jvilar_prod += jvilar_prodxmes[i-1]
+    valor_jschmukler_prod += jschmukler_prodxmes[i-1]
+    
+    
   #Devuelvo API JSON
   return jsonify({
                  "valores_alta" : valores_alta,
@@ -107,6 +144,14 @@ def create_graph():
                  "estadoGral_EL": estadoGral_EL,
                  "estadoGral_LI": estadoGral_LI,
                  "estadoGral_PE": estadoGral_PE,
+                 "alorenzo_prodxmes": alorenzo_prodxmes,
+                 "valor_alorenzo_prod": valor_alorenzo_prod,
+                 "ebarbero_prodxmes": ebarbero_prodxmes,
+                 "valor_ebarbero_prod": valor_ebarbero_prod,
+                 "jvilar_prodxmes": jvilar_prodxmes,
+                 "valor_jvilar_prod": valor_jvilar_prod,
+                 "jschmukler_prodxmes": jschmukler_prodxmes,
+                 "valor_jschmukler_prod": valor_jschmukler_prod,
   })
 
 

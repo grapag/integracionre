@@ -109,10 +109,10 @@ const refreshButton = document.querySelector('#refreshButton')
       //INICIO BAR CHART X INTEGRADOR
       Highcharts.chart('container_barChartxIntegrador', {
       title: {
-        text: 'Combination chart'
+        text: 'Produccion x Integrador'
       },
       xAxis: {
-        categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo']
+        categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
       },
       labels: {
         items: [{
@@ -129,20 +129,20 @@ const refreshButton = document.querySelector('#refreshButton')
       },
       series: [{
         type: 'column',
-        name: 'E.Barbero',
-        data: [3, 2, 1, 3, 4]
+        name: 'A.Lorenzo',
+        data: data["alorenzo_prodxmes"]
       }, {
         type: 'column',
-        name: 'E.Lorenzo',
-        data: [2, 3, 5, 7, 6]
+        name: 'E.Barbero',
+        data: data["ebarbero_prodxmes"]
       }, {
         type: 'column',
         name: 'J.Vilar',
-        data: [4, 3, 3, 9, 0]
+        data: data["jvilar_prodxmes"]
       }, {
         type: 'column',
         name: 'J.Schmukler',
-        data: [5, 3, 4, 8, 2]
+        data: data["jschmukler_prodxmes"]
       }, /*{
         type: 'spline',
         name: 'Average',
@@ -156,21 +156,21 @@ const refreshButton = document.querySelector('#refreshButton')
         type: 'pie',
         name: 'Total',
         data: [{
-          name: 'E.Barbero',
-          y: 12,
-          color: Highcharts.getOptions().colors[0] // Jane's color
+          name: 'A.Lorenzo',
+          y: data["valor_alorenzo_prod"],
+          color: Highcharts.getOptions().colors[0] // A.Lorenzo color
         }, {
-          name: 'E.Lorenzo',
-          y: 10,
-          color: Highcharts.getOptions().colors[1] // John's color
+          name: 'E.Barbero',
+          y: data["valor_ebarbero_prod"],
+          color: Highcharts.getOptions().colors[1] // E.Barbero color
         }, {
           name: 'J.Vilar',
-          y: 17,
-          color: Highcharts.getOptions().colors[2] // Joe's color
+          y: data["valor_jvilar_prod"],
+          color: Highcharts.getOptions().colors[2] // J.Vilar color
         }, {
           name: 'J.Schmukler',
-          y: 18,
-          color: Highcharts.getOptions().colors[3] // Joe's color
+          y: data["valor_jschmukler_prod"],
+          color: Highcharts.getOptions().colors[3] // J.Schmukler color
         }],
         center: [100, 80],
         size: 100,
