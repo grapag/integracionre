@@ -2,10 +2,18 @@ const url = 'https://integracionre.gastongrapu.repl.co/api';
 const refreshButton = document.querySelector('#refreshButton')
 //const createChart = require('./createChart.js');
 
+
+
 //window.addEventlistener('load', () => {
   fetch(url)
     .then(response => response.json())
     .then(data => {
+      //Calculo de valores para liberacion mensual agrupada
+      var liberacionxmes = [];
+      for(i = 0; i < 12; i++){
+        liberacionxmes[i] = data["ebarbero_prodxmes"][i] + data["jvilar_prodxmes"][i] + data["alorenzo_prodxmes"][i] + data["jschmukler_prodxmes"][i];
+      }
+      
       //createChart(data); //Funcion que crea el gráfico con los datos actualizados
       //CREACION DE BAR CHART PROGRAMACION
           Highcharts.chart('container_barChart', {
@@ -37,26 +45,37 @@ const refreshButton = document.querySelector('#refreshButton')
             }
           },
         
-          yAxis: {
+          yAxis: [{
             allowDecimals: false,
             title: {
               text: 'Cant de RE'
             }
           },
+                 {
+            allowDecimals: false,
+            title: {
+              text: null
+            }
+          }],
         
           series: [{
+            yAxis: 0,
             name: 'Alta',
             data: data["valores_alta"]
           }, {
+            yAxis: 0,
             name: 'Ampliación',
             data: data["valores_ampliacion"]
           }, {
+            yAxis: 0,
             name: 'Reemplazo',
             data: data["valores_reemplazo"]
           }, {
+            yAxis: 0,
             name: 'Cliente',
             data: data["valores_cliente"]
           }, {
+            yAxis: 1,
             name: 'Sin Programar',
             data: data["valores_pendientes"]
           }],
@@ -143,16 +162,16 @@ const refreshButton = document.querySelector('#refreshButton')
         type: 'column',
         name: 'J.Schmukler',
         data: data["jschmukler_prodxmes"]
-      }, /*{
+      }, {
         type: 'spline',
-        name: 'Average',
-        data: [3, 2.67, 3, 6.33, 3.33],
+        name: 'Liberado x mes',
+        data: liberacionxmes,
         marker: {
           lineWidth: 2,
           lineColor: Highcharts.getOptions().colors[3],
-          fillColor: 'white'
+          fillColor: 'red'
         }
-      },*/ {
+      }, {
         type: 'pie',
         name: 'Total',
         data: [{
@@ -214,8 +233,6 @@ const refreshButton = document.querySelector('#refreshButton')
         data: [{
           name: 'No Iniciado',
           y: data["estadoGral_NI"],
-          sliced: true,
-          selected: true
         }, {
           name: 'En Construccion',
           y: data["estadoGral_EC"]
