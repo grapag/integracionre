@@ -28,11 +28,13 @@ def create_graph():
   ampliacion = []
   reemplazo = []
   cliente = []
+  ampliacion_placas = []
   pendientes=0
   valores_alta = []
   valores_ampliacion = []
   valores_reemplazo = []
   valores_cliente = []
+  valores_ampliacion_placas = []
   valores_pendientes = [0,0,0,0,0,0,0,0,0,0,0,0]
   estadoGral_NI=0
   estadoGral_EC=0
@@ -68,6 +70,12 @@ def create_graph():
       pass
     else:
       cliente.append(int(user["Fecha programada"][5:7]))
+
+  for user in collection.find({"Tipo [ALTA/AMPL]":"Ampliacion_Placas"}):
+    if(user["Fecha programada"] == ""):
+      pass
+    else:
+      ampliacion_placas.append(int(user["Fecha programada"][5:7]))
 
   for user in collection.find({"$or": [
                               {"Fecha programada": {'$eq': float('NaN')}},
@@ -126,6 +134,7 @@ def create_graph():
     valores_ampliacion.append(ampliacion.count(i))
     valores_reemplazo.append(reemplazo.count(i))
     valores_cliente.append(cliente.count(i))
+    valores_ampliacion_placas.append(ampliacion_placas.count(i))
     valor_alorenzo_prod += alorenzo_prodxmes[i-1]
     valor_ebarbero_prod += ebarbero_prodxmes[i-1]
     valor_jvilar_prod += jvilar_prodxmes[i-1]
@@ -138,6 +147,7 @@ def create_graph():
                  "valores_ampliacion" : valores_ampliacion,
                  "valores_reemplazo" : valores_reemplazo,
                  "valores_cliente" : valores_cliente,
+                 "valores_ampliacion_placas" : valores_ampliacion_placas,
                  "valores_pendientes" : valores_pendientes,
                  "estadoGral_NI": estadoGral_NI,
                  "estadoGral_EC": estadoGral_EC,

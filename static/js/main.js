@@ -64,8 +64,12 @@ const refreshButton = document.querySelector('#refreshButton')
             data: data["valores_alta"]
           }, {
             yAxis: 0,
-            name: 'Ampliación',
+            name: 'Ampliacion',
             data: data["valores_ampliacion"]
+          }, {
+            yAxis: 0,
+            name: 'Ampliacion Placas',
+            data: data["valores_ampliacion_placas"]
           }, {
             yAxis: 0,
             name: 'Reemplazo',
