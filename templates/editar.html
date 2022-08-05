@@ -78,7 +78,7 @@
 
 <!-- ###TABLA PARA MODIFICAR DATOS### --> 
 <div class="col-sm">
-  <Form action="/update/{{datos.0}}" method="POST">
+  <form action="/update/{{datos.0}}" method="POST">
   <table class="table table-warning table-striped table-sm bg-white">
     <thead>
       <tr>
@@ -99,6 +99,7 @@
               <input type="text" name="nuevokey" value="{{datos.30}}" class="form-control"></td>
             <td>
               <select class="form-select" name="tipopo">
+                <option>{{datos.31}}</option>
                 <option>Alta</option>
                 <option>Ampliacion</option>
                 <option>Ampliacion_Placas</option>
@@ -136,8 +137,8 @@
             </td>
             <td>
                
-                <input type="submit" class="btn btn-sm btn-primary" value="Guardar">
-              
+              <input type="submit" class="btn btn-sm btn-primary" value="Guardar">
+              <input type="button" class="btn btn-sm btn-danger" onclick="location.href='https://integracionre.gastongrapu.repl.co/imadmin';" value="Cancelar">
             </td>
           </tr>
         </form>
