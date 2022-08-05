@@ -1,0 +1,64 @@
+interface {{PORT_HUAWEI}}
+ description MOV*{{NOMBRE_SITIO}}*{{CODIGO_SITIO}}*{{REFERENCIA}}*850M
+ undo shutdown
+ undo dcn
+ port-queue be wfq weight 20 outbound
+ port-queue af2 wfq weight 80 outbound
+ port-queue ef pq low-latency outbound
+#
+#
+interface {{PORT_HUAWEI}}.{{VLAN_S1}}
+ description MOV*{{NOMBRE_SITIO}}*{{CODIGO_SITIO}}*{{REFERENCIA}}*850M*S1
+ ip binding vpn-instance vpn-personal-s1
+ ip address {{IP_S1}} {{MASK_S1}}
+ encapsulation dot1q-termination
+ dot1q termination vid {{VLAN_S1}}
+ arp broadcast enable
+ trust upstream principal
+ trust 8021p
+#
+#
+interface {{PORT_HUAWEI}}.{{VLAN_S1MME}}
+ description MOV*{{NOMBRE_SITIO}}*{{CODIGO_SITIO}}*{{REFERENCIA}}*850M*S1MME
+ ip binding vpn-instance vpn-personal-S1MME
+ ip address {{IP_S1MME}} {{MASK_S1MME}}
+ encapsulation dot1q-termination
+ dot1q termination vid {{VLAN_S1MME}}
+ arp broadcast enable
+ trust upstream principal
+ trust 8021p
+#
+#
+interface {{PORT_HUAWEI}}.{{VLAN_GOMRAN}}
+ description MOV*{{NOMBRE_SITIO}}*{{CODIGO_SITIO}}*{{REFERENCIA}}*850M*GOMRAN
+ ip binding vpn-instance vpn-personal-gomran
+ ip address {{IP_GOMRAN}} {{MASK_GOMRAN}}
+ encapsulation dot1q-termination
+ dot1q termination vid {{VLAN_GOMRAN}}
+ arp broadcast enable
+ trust upstream principal
+ trust 8021p
+#
+#
+interface {{PORT_HUAWEI}}.{{VLAN_IUB}}
+ description MOV*{{NOMBRE_SITIO}}*{{CODIGO_SITIO}}*{{REFERENCIA}}*850M*3G
+ ip binding vpn-instance vpn-personal-iub-3G
+ ip address {{IP_IUB}} {{MASK_IUB}}
+ encapsulation dot1q-termination
+ dot1q termination vid {{VLAN_IUB}}
+ arp broadcast enable
+ trust upstream principal
+ trust 8021p
+#
+#
+interface {{PORT_HUAWEI}}.{{VLAN_ABIS}}
+ description MOV*{{NOMBRE_SITIO}}*{{CODIGO_SITIO}}*{{REFERENCIA}}*850M*2G
+ ip binding vpn-instance vpn-personal-abis-2G
+ ip address {{IP_ABIS}} {{MASK_ABIS}}
+ encapsulation dot1q-termination
+ dot1q termination vid {{VLAN_ABIS}}
+ arp broadcast enable
+ trust upstream principal
+ trust 8021p
+#
+ip route-static vpn-instance vpn-personal-gomran {{IP_GOMRAN_2GAB}} {{MASK_GOMRAN}} {{IP_GOMRAN_STATIC}}

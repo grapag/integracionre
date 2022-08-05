@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<!-- ###FORMULARIO DE INGRESO DE DATOS### --> 
+<form action="{{ url_for('bhtemplates') }}" method="GET" class="row s-0 was-validated container px-1" validate>
+
+        <div class="col-sm position-relative">
+            <label for="validationTooltip01" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Refe:</span>
+                <input type="text" class="form-control" name="bhrefe" id="validationTooltip02" required>
+            </div>
+        </div>
+
+        <div class="col-sm position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">CodigoSitio:</span>
+                <input type="text" class="form-control" name="bhcodigo" id="validationTooltip02" required>
+            </div>
+        </div>
+  
+        <div class="col-sm position-relative">
+            <label for="validationTooltip04" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Equipo:</span>
+                <select class="form-select" name="bhequipo" id="validationTooltip04" required>
+                  <option selected disabled value="">Seleccione...</option>
+                  <option>Cisco</option>
+                  <option>Huawei</option>
+                  <option>Juniper</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-sm position-relative">
+            <label for="validationTooltip04" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Template:</span>
+                <select class="form-select" name="bhtipo" id="validationTooltip04" required>
+                  <option selected disabled value="">Seleccione...</option>
+                  <option>Acceso</option>
+                  <option>Bundle</option>
+                  <option>Eth-Trunk</option>
+                  <option>Dot1Q</option>
+                  <option>QinQ</option>
+                </select>
+            </div>
+        </div>
+
+
+  <div class="col-12">
+    <br></br>
+    <button class="btn btn-primary" type="submit">Generar Template</button>
+  </div>
+</form>
+
+<br></br>
+
+<h3>Configuracion Juniper</h3>
+ <h5>Template Original</h5>
+  {% for conf in config %}
+    <div >{{conf}}</div>
+  {% endfor %}
+
+<br></br>
+<br></br>
+{% endblock %}
+
