@@ -1,7 +1,16 @@
 const url = 'https://integracionre.gastongrapu.repl.co/api';
+const urlFetch = '/datagral';
 const refreshButton = document.querySelector('#refreshButton')
 //const createChart = require('./createChart.js');
 
+var xhttp = new XMLHttpRequest();
+//función que posiciona el DOM para hacer el response de la petición. En este caso utilizo todo el HTML, pero podría usar el document.getElementById("container pt-4").innerHTML, para obtener el response en una posicion puntual
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+       // Typical action to be performed when the document is ready:
+       document.getElementsByTagName("HTML")[0].innerHTML = xhttp.responseText;
+    }
+};
 
 
 //window.addEventlistener('load', () => {
@@ -229,6 +238,26 @@ const refreshButton = document.querySelector('#refreshButton')
             enabled: false
           },
           showInLegend: true
+        },
+        //Captura eventos sobre el grafico
+        series: {
+          point: {
+            events: {
+              click() {
+                //Genero variables tipo string primitivo JS
+                name = String(this.options.name);
+                value = String(this.options.y);
+                //Creo diccionario con los strings
+                let dict_values = {name,value};
+                //Convierto diccionario en JSON
+                let s = JSON.stringify(dict_values);
+                //Envio request POST a la url, luego seteo el header para indicar JSON, al final hago el send
+                xhttp.open("POST", urlFetch, true);
+                xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+                xhttp.send(s);
+              }
+            }
+          }
         }
       },
       series: [{

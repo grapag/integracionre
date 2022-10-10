@@ -260,7 +260,7 @@ def agrega_pedido():
     #Busca el ultimo registro para identificar el nro de ID
     ultimo = collection.find().sort("_id", -1).limit(1)
     ultimo_id = int(list(ultimo)[0]["ID"])
-  
+
     #Calcula el TIPO RE
     if (request.values.get('po2022') == "PO2022_RELH"):
         tipore = "RELH"
@@ -354,7 +354,33 @@ def post():
     output.headers["Content-type"] = "text/csv"
     return output
 
+###  DATA GRAFICOS  ###
+@app.route("/datagral", methods=['POST', 'GET'])
+def get_dataGral_graph():
+    dataSelected = request.json
+    if request.method == 'POST':
+      datobd = []
+      #Limpio la lista, para cargarla luego de las actualizaciones
+      datobd.clear()
+      contadorSelected=0
+      for document in collection.find({}):
+        if((dataSelected["name"] == "Liberado") or (dataSelected["name"] == "En Liberacion")):
+          if(document["Estado General"] == dataSelected["name"]):
+            contadorSelected=contadorSelected+1
+          #Armo lista de documentos que vienen de la BD para enviar al Front
+            datobd.append(document)
+        else:
+          if(document["Estado General"] != "Liberado" and document["Estado General"] != "En Liberacion"):
+          #Armo lista de documentos que vienen de la BD para enviar al Front
+            contadorSelected=contadorSelected+1
+            datobd.append(document)
+        #Lista de las cabeceras del diccionario
+      listaheads = list(document.keys())
+      print(contadorSelected)
+      return flask.render_template('datagral.html',heads=listaheads,datos=datobd,contador=contadorSelected,data=dataSelected["name"])
+    #return ('', 204)
 
+    
 ###  BACKHAULING  ###
 @app.route("/bhtemplates", methods=['GET', 'POST'])
 def bhtemplates():
@@ -362,14 +388,14 @@ def bhtemplates():
     config = []
     archivo = open("Configs/Config_Huawei.txt")
     while (True):
-        linea=archivo.readline()
+        linea = archivo.readline()
         config.append(linea)
         #revisar si la linea no es null
         if not linea:
             break
     #cerramos el archivo
     archivo.close
-    return flask.render_template("bhtemplates.html",config=config)
+    return flask.render_template("bhtemplates.html", config=config)
 
 
 # Inicializando la app
