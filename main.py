@@ -380,7 +380,15 @@ def get_dataGral_graph():
       return flask.render_template('datagral.html',heads=listaheads,datos=datobd,contador=contadorSelected,data=dataSelected["name"])
     #return ('', 204)
 
-    
+
+
+### ACTIVIDADES RE ###
+@app.route("/actividadre", methods=['GET', 'POST'])
+def actividadre():
+  print("opening function in backend linked to actividadre")
+  return flask.render_template('actividadre.html')
+
+  
 ###  BACKHAULING  ###
 @app.route("/bhtemplates", methods=['GET', 'POST'])
 def bhtemplates():

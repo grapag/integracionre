@@ -14,3 +14,5 @@ ultimo = collection.find().sort("_id", -1).limit(1)
 lista = list(ultimo)
 print(lista[0]["ID"])
 print("DB UPDATED")
+
+for 

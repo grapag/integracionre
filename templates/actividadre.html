@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<!-- ###FORMULARIO DE INGRESO DE DATOS### --> 
+<form action="{{ url_for('agrega_pedido') }}" method="GET" class="row m-0 was-validated container px-3" validate>
+
+        <div class="col-sm-4 position-relative">
+            <label for="validationTooltip04" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">TipoTarea:</span>
+                <select class="form-select" name="tipotarea" id="validationTooltip04" required>
+                  <option selected disabled value="">Seleccione...</option>
+                  <option>Vuelco RE Obsoleto</option>
+                  <option>Vuelco RE-FO</option>
+                  <option>Gestion RE</option>
+                  <option>Vuelco Red Obj/Saturacion</option>
+                  <option>No Catalogado</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-4 position-relative">
+            <label for="validationTooltip04" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Region:</span>
+                <select class="form-select" name="region" id="validationTooltip04" required>
+                  <option selected disabled value="">Seleccione...</option>
+                  <option>AMBA</option>
+                  <option>MEDI</option>
+                  <option>LITO</option>
+                  <option>SUR</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-4 position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Acro_A:</span>
+                <input type="text" class="form-control" name="acroa" id="validationTooltip02">
+            </div>
+        </div>
+
+        <div class="col-md-4 position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Acro_B:</span>
+                <input type="text" class="form-control" name="acrob" id="validationTooltip02">
+            </div>
+        </div>
+
+        <div class="col-md-4 position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Codigo_A:</span>
+                <input type="text" class="form-control" name="codigoa" id="validationTooltip02">
+            </div>
+        </div>
+
+        <div class="col-md-4 position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Codigo_B:</span>
+                <input type="text" class="form-control" name="codigob" id="validationTooltip02">
+            </div>
+        </div>
+
+        <div class="col-md-4 position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Estacion_A:</span>
+                <input type="text" class="form-control" name="estaciona" id="validationTooltip02">
+            </div>
+        </div>
+
+        <div class="col-md-4 position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Estacion_B:</span>
+                <input type="text" class="form-control" name="estacionb" id="validationTooltip02">
+            </div>
+        </div>
+
+        <div class="col-md-4 position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">Sistema:</span>
+                <input type="text" class="form-control" name="sistema" id="validationTooltip02">
+            </div>
+        </div>
+  
+      <div class="mb-3">
+        <label for="validationTextarea" class="form-label"></label>
+        <span class="input-group-text" id="validationTooltipUsernamePrepend">Observaciones:</span>
+        <textarea class="form-control is-invalid" id="validationTextarea" name="obspo2022" placeholder="Detalle de observacion"></textarea>
+      </div>
+
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit" disabled>Guardar Registro</button>
+  </div>
+</form>
+
+<!-- ###GRAFICA HIGHCHARTS### -->
+
+<!-- ###FIN GRAFICA HIGHCHARTS### --> 
+
+<div>
+ 
+</div>
+
+<!-- ###TABLA LISTA DATOS### --> 
+<div class="col-sm">
+  <!-- ###EXPORTACION DE DATOS### --> 
+  <!--<form action="/download" method = "GET">
+    <button id="exportar" type="submit">Exportar tabla de datos</button>
+  </form>
+  -->
+  <div>   
+  </div>
+</div>
+
+{% endblock %}

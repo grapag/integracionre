@@ -6,6 +6,11 @@
 <!-- ###TABLA LISTA DATOS ORIGINAL### --> 
 <div class="col-sm">
   <h3> Cantidad de registros encontrados ->{{data}}: {{contador}}</h3>
+    <!-- ###EXPORTACION DE DATOS### --> 
+  <form action="/download" method = "GET">
+    <button id="exportar" type="submit">Exportar tabla de datos</button>
+  </form>
+  
   <table class="table table-dark table-striped table-hover table-bordered table-sm bg-white">
     <thead>
       <tr>
@@ -38,7 +43,6 @@
       <dl>
         {% for dato in datos %}
           <tr>
-          <tr>
             <td><dd>{{dato['ID']}}</dd></td>
             <td><dd>{{dato['Tipo RE']}}</dd></td>
             <td><dd>{{dato['Key']}}</dd></td>
@@ -68,7 +72,9 @@
     </tbody>
   </table>
   <div>
-    <!-- SEPARADOR -->
+  </div>
+</div>   
+<!-- SEPARADOR -->
 <!-- ###FIN TABLA DE DATOS ORIGINAL### -->
 
 {% endblock %}
