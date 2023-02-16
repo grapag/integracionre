@@ -1,0 +1,173 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<!-- ###FORMULARIO DE INGRESO DE DATOS### --> 
+<form action="{{ url_for('genscript2g') }}" method="POST" class="row s-0 was-validated container px-1" validate>
+    
+    <h4>&nbsp;DATOS BSC x Creacion BTS</h4>
+      <div class="row sm container">
+        <div class="col-sm position-relative">
+            <label for="validationTooltip01" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">BTSNAME:</span>
+                <input type="text" class="form-control" name="BTSNAME" id="validationTooltip02" required>
+            </div>
+        </div>
+
+        <div class="col-sm position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">BTSID:</span>
+                <input type="text" class="form-control" name="BTSID" id="validationTooltip02" required>
+            </div>
+        </div>
+        <div class="col-sm position-relative">
+            <label for="validationTooltip01" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">SCTPLNKID:</span>
+                <input type="text" class="form-control" name="SCTPLNKID" id="validationTooltip02" required>
+            </div>
+        </div>
+      </div>
+  
+      <div class="row sm container">
+        <div class="col-md-6 position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">LOCIP1: -> (LST ETHTRKIP:; y LST SRCIPRT: SRN=XX,SN=XX;)</span>
+                <input type="text" class="form-control" name="LOCIP1" id="validationTooltip02" required>
+            </div>
+        </div>
+        <div class="col-md-4 position-relative">
+            <label for="validationTooltip01" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">PEERIP1: -> (IP 2G - Lisy +1)</span>
+                <input type="text" class="form-control" name="PEERIP1" id="validationTooltip02" required>
+            </div>
+        </div>
+
+        <div class="col-md-4 position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">OAMIP:-> (IP GOMRAN - Lisy +1)</span>
+                <input type="text" class="form-control" name="OAMIP" id="validationTooltip02" required>
+            </div>
+        </div>
+      </div>
+    <br></br>
+    <br></br>
+    <br></br>
+    <br></br>
+    <h4>&nbsp;DATOS x Creacion de Celdas</h4>
+    <h5>&nbsp;DATOS Generales de Celdas</h5>
+
+        <div class="col-sm position-relative">
+            <label for="validationTooltip01" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">OPC: -> (LST GCELLOSPMAP: IDTYPE=BYNAME, BTSNAME="BTS EXISTENTE";)</span>
+                <input type="text" class="form-control" name="OPC" id="validationTooltip02" required>
+            </div>
+        </div>
+        <br></br>
+        <br></br>
+        <br></br>
+        <h6>&nbsp;Calculo de NSEI -> LST PTPBVC:IDTYPE=BYNAME, CELLNAME="CELDA EXISTENTE";, al resultado le sumo 1</h6>
+        <div class="col-sm position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">NSEI1:</span>
+                <input type="text" class="form-control" name="NSEI1" id="validationTooltip02" required>
+            </div>
+        </div>
+
+    <br></br>
+    <h6>&nbsp;DATOS Celda 1</h6>
+      <div class="row sm container">
+        <div class="col-sm position-relative">
+            <label for="validationTooltip01" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">CELLNAME:</span>
+                <input type="text" class="form-control" name="CELLNAME1" id="validationTooltip02" required>
+            </div>
+        </div>
+
+        <div class="col-sm position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">CELLID:</span>
+                <input type="text" class="form-control" name="CELLID1" id="validationTooltip02" required>
+            </div>
+        </div>
+        <div class="col-sm position-relative">
+            <label for="validationTooltip01" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">TRXID:</span>
+                <input type="text" class="form-control" name="TRXID1" id="validationTooltip02" required>
+            </div>
+        </div>
+      </div>
+  
+    <br></br>
+    <h6>&nbsp;DATOS Celda 2</h6>
+    <div class="row sm container">
+        <div class="col-sm position-relative">
+            <label for="validationTooltip01" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">CELLNAME:</span>
+                <input type="text" class="form-control" name="CELLNAME2" id="validationTooltip02" required>
+            </div>
+        </div>
+
+        <div class="col-sm position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">CELLID:</span>
+                <input type="text" class="form-control" name="CELLID2" id="validationTooltip02" required>
+            </div>
+        </div>
+        <div class="col-sm position-relative">
+            <label for="validationTooltip01" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">TRXID:</span>
+                <input type="text" class="form-control" name="TRXID2" id="validationTooltip02" required>
+            </div>
+        </div>
+      </div>
+
+    <br></br>
+    <h6>&nbsp;DATOS Celda 3</h6>
+    <div class="row sm container">
+        <div class="col-sm position-relative">
+            <label for="validationTooltip01" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">CELLNAME:</span>
+                <input type="text" class="form-control" name="CELLNAME3" id="validationTooltip02" required>
+            </div>
+        </div>
+
+        <div class="col-sm position-relative">
+            <label for="validationTooltip02" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">CELLID:</span>
+                <input type="text" class="form-control" name="CELLID3" id="validationTooltip02" required>
+            </div>
+        </div>
+        <div class="col-sm position-relative">
+            <label for="validationTooltip01" class="form-label"> </label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">TRXID:</span>
+                <input type="text" class="form-control" name="TRXID3" id="validationTooltip02" required>
+            </div>
+        </div>
+      </div>
+
+  
+  <div class="col-12">
+    <br></br>
+    <button class="btn btn-primary" type="submit">Generar Template</button>
+  </div>
+</form>
+
+<br></br>
+{% endblock %}
+
