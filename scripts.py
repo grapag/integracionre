@@ -15,4 +15,14 @@ lista = list(ultimo)
 print(lista[0]["ID"])
 print("DB UPDATED")
 
-for 
+# Modificar columnas en mongodb (collection)
+newvalue = {"$rename": {"Tipo_renombrar1":"Tipo [ALTA/AMPL]"}}
+collection.update_many({}, newvalue)
+collection.update_many({}, {"$rename": {"Estado General_renombrar2":"Estado General"}})
+collection.update_many({}, {"$rename": {"Comentario_renombrar3":"Comentario"}})
+collection.update_many({}, {"$rename": {"Fecha programada_renombrar4":"Fecha programada"}})
+collection.update_many({}, {"$rename": {"MesProgramado (Calculada)_renombrar5":"MesProgramado (Calculada)"}})
+collection.update_many({}, {"$rename": {"Fecha liberación_renombrar6":"Fecha liberación"}})
+collection.update_many({}, {"$rename": {"Mes liberado (Calculado)_renombrar7":"Mes liberado (Calculado)"}})
+collection.update_many({}, {"$rename": {"Integrador_renombrar8":"Integrador"}})
+collection.update_many({}, {"$rename": {"Escenario_renombrar9":"Escenario"}})

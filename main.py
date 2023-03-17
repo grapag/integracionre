@@ -16,7 +16,11 @@ client = pymongo.MongoClient(
     "mongodb+srv://ggrapunsky:Tiburonloco12@cluster0.hzt0u.mongodb.net/bdreip?retryWrites=true&w=majority"
 )
 db = client["bdreip"]
-collection = db["PO2022"]
+#coleccion BD 2022
+collection = db["PO2023"]
+#coleccion BD 2023
+collection_22 = db["PO2022"]
+
 
 #CREO LISTA PARA ENVIAR AL FRONT HTML
 datolista = []
@@ -180,46 +184,85 @@ def create_graph():
 def Index():
     #Limpio la lista, para cargarla luego de las actualizaciones
     datolista.clear()
-    for document in collection.find({}):
+    po=request.args.get('po')
+  
+    if po=="2022": #capturo datos por URL perteneciente al PO y defino que BD utilizar
+      for document in collection_22.find({}):
+          #Armo lista de documentos que vienen de la BD para enviar al Front
+          datolista.append(document)
+      #Lista de las cabeceras del diccionario
+      listaheads = list(datolista[0].keys())
+      return flask.render_template("index.html",
+                                   datos=datolista,
+                                   heads=listaheads)
+      
+    else: #Al no recibir datos por URL perteneciente al PO utilizo la BD del PO actual
+      for document in collection.find({}):
         #Armo lista de documentos que vienen de la BD para enviar al Front
         datolista.append(document)
-    #Lista de las cabeceras del diccionario
-    listaheads = list(datolista[0].keys())
-    return flask.render_template("index.html",
-                                 datos=datolista,
-                                 heads=listaheads)
-
+      #Lista de las cabeceras del diccionario
+      listaheads = list(datolista[0].keys())
+      return flask.render_template("index.html",
+                                     datos=datolista,
+                                     heads=listaheads)
 
 @app.route("/imadmin", methods=['GET', 'POST'])
 def Index_admin():
     #Limpio la lista, para cargarla luego de las actualizaciones
     datolista.clear()
-    for document in collection.find({}):
-        #Armo lista de documentos que vienen de la BD para enviar al Front
-        datolista.append(document)
-    #Lista de las cabeceras del diccionario
-    listaheads = list(datolista[0].keys())
-    return flask.render_template("index_admin.html",
-                                 datos=datolista,
-                                 heads=listaheads)
-
+    po=request.args.get('po')
+  
+    if po=="2022": #capturo datos por URL perteneciente al PO y defino que BD utilizar
+      for document in collection_22.find({}):
+          #Armo lista de documentos que vienen de la BD para enviar al Front
+          datolista.append(document)
+      #Lista de las cabeceras del diccionario
+      listaheads = list(datolista[0].keys())
+      return flask.render_template("index_admin.html",
+                                   datos=datolista,
+                                   heads=listaheads,
+                                   po=po)
+      
+    else: #capturo datos por URL perteneciente al PO y defino que BD utilizar
+      for document in collection.find({}):
+          #Armo lista de documentos que vienen de la BD para enviar al Front
+          datolista.append(document)
+      #Lista de las cabeceras del diccionario
+      listaheads = list(datolista[0].keys())
+      return flask.render_template("index_admin.html",
+                                   datos=datolista,
+                                   heads=listaheads,
+                                   po="")
 
 @app.route('/edit/<id>', methods=['POST', 'GET'])
 def get_data(id):
     if request.method == 'POST':
+      po=request.args.get('po')
+
+      if po=="2022": #capturo datos por URL perteneciente al PO y defino que BD utilizar
+        #Busco el objeto que recibí en la BD y lo envío al HTML para editar
+        user = collection_22.find_one({'_id': ObjectId(id)})
+        print(user)
+        return render_template('editar.html',
+                               datos=list(user.values()),
+                               heads=list(user.keys()),
+                               po=po)
+        
+      else: #capturo datos por URL perteneciente al PO y defino que BD utilizar
         #Busco el objeto que recibí en la BD y lo envío al HTML para editar
         user = collection.find_one({'_id': ObjectId(id)})
         print(user)
         return render_template('editar.html',
                                datos=list(user.values()),
-                               heads=list(user.keys()))
+                               heads=list(user.keys()),
+                               po=po)
 
 
-@app.route("/update/<id>", methods=['GET', 'POST'])
+@app.route('/update/<id>', methods=['GET', 'POST'])
 def actualiza_pedido(id):
     #print(request.form['fechaprogramada'])
     #print(type(request.form['fechaprogramada']))
-
+    
     if (request.form['fechaprogramada'] == ""):
         fechaprog = "nan"
     else:
@@ -231,6 +274,7 @@ def actualiza_pedido(id):
         fechalib = int(request.form['fechaliberacion'][5:7])
 
     if request.method == 'POST':
+        po=request.args.get('po')
         #estadopedido = request.form['estadopedido']
         newvalues = {
             "$set": {
@@ -245,30 +289,39 @@ def actualiza_pedido(id):
                 "Integrador": request.form['integrador']
             }
         }
+    
+    if po=="2022": #capturo datos por URL perteneciente al PO y defino que BD utilizar
+      #Busco el objeto seleccionado de mi front en la DB
+      user = collection_22.find_one({'_id': ObjectId(id)})
+      #Actualizo la DB con los nuevos valores
+      collection_22.update_one(user, newvalues)
+      print("DB UPDATED")
 
-        #Busco el objeto seleccionado de mi front en la DB
-        user = collection.find_one({'_id': ObjectId(id)})
-        #Actualizo la DB con los nuevos valores
-        collection.update_one(user, newvalues)
-        print("DB UPDATED")
-
-        return redirect(url_for('Index_admin'))
+    else: #capturo datos por URL perteneciente al PO y defino que BD utilizar
+      #Busco el objeto seleccionado de mi front en la DB
+      user = collection.find_one({'_id': ObjectId(id)})
+      #Actualizo la DB con los nuevos valores
+      collection.update_one(user, newvalues)
+      print("DB UPDATED")
+        
+    return redirect(url_for('Index_admin'))
 
 
 @app.route('/add', methods=['GET', 'POST'])
 def agrega_pedido():
+  
     #Busca el ultimo registro para identificar el nro de ID
     ultimo = collection.find().sort("_id", -1).limit(1)
     ultimo_id = int(list(ultimo)[0]["ID"])
 
     #Calcula el TIPO RE
-    if (request.values.get('po2022') == "PO2022_RELH"):
+    if (request.values.get('po') == "PO2023_RELH"):
         tipore = "RELH"
     else:
         tipore = "REIP"
 
     #Calcula si es RE CLIENTE
-    if (request.values.get('po2022') == "PO2022_REIP_Cliente"):
+    if (request.values.get('po') == "PO2023_REIP_Cliente"):
         escliente = "Si"
     else:
         escliente = "nan"
@@ -285,11 +338,11 @@ def agrega_pedido():
             "Tipo RE": tipore,
             "Key": request.values.get('key'),
             "Tipo Plan de Obra": "nan",
-            "PO2022": request.values.get('po2022'),
+            "PO2022": request.values.get('po'),
             "Version": "nan",
             "Accion_Planif": request.values.get('accionplanif'),
             "Config Obj Planif": "nan",
-            "Observacion PO2022": request.values.get('obspo2022'),
+            "Observacion PO2022": request.values.get('obspo'),
             "Es para un cliente?": escliente,
             "Q Planificado": "nan",
             "Region": request.values.get('region'),
@@ -328,23 +381,38 @@ def agrega_pedido():
     return redirect(url_for('Index_admin'))
 
 
-@app.route('/download', methods=['GET'])
+@app.route('/download', methods=['GET', 'POST'])
 def post():
     csvList = []
     index = 0
-    #Consulto la DB para armar los datos a enviar al exportador de CSV
-    for document in collection.find({}):
-        if (index == 0):  #Si es el primero, armo los headers del archivo
-            listOfKeys = document.keys()
-            listOfKeys = list(listOfKeys)
-            csvList.append(listOfKeys)
-            index = 1
-        else:
-            pass
-        #Armo lista de lista de valores del archivo csv [rows]
-        listOfValues = document.values()
-        listOfValues = list(listOfValues)
-        csvList.append(listOfValues)
+    po=request.args.get('po')
+    
+    if po=="2022": #capturo datos por URL perteneciente al PO y defino que BD utilizar
+      #Consulto la DB para armar los datos a enviar al exportador de CSV
+      for document in collection_22.find({}):
+          if (index == 0):  #Si es el primero, armo los headers del archivo
+              listOfKeys = document.keys()
+              listOfKeys = list(listOfKeys)
+              csvList.append(listOfKeys)
+              index = 1
+          else:
+              pass
+
+    else: #capturo datos por URL perteneciente al PO y defino que BD utilizar
+      #Consulto la DB para armar los datos a enviar al exportador de CSV
+      for document in collection.find({}):
+          if (index == 0):  #Si es el primero, armo los headers del archivo
+              listOfKeys = document.keys()
+              listOfKeys = list(listOfKeys)
+              csvList.append(listOfKeys)
+              index = 1
+          else:
+              pass
+            
+    #Armo lista de lista de valores del archivo csv [rows]
+    listOfValues = document.values()
+    listOfValues = list(listOfValues)
+    csvList.append(listOfValues)
     #Comienzo con la exportacion del CSV
     si = StringIO()
     cw = csv.writer(si)

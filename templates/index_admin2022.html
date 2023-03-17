@@ -7,14 +7,14 @@
         <div class="col-sm-4 position-relative">
             <label for="validationTooltip04" class="form-label"> </label>
             <div class="input-group has-validation">
-                <span class="input-group-text" id="validationTooltipUsernamePrepend">PO2023:</span>
+                <span class="input-group-text" id="validationTooltipUsernamePrepend">PO2022:</span>
                 <select class="form-select" name="po" id="validationTooltip04" required>
                   <option selected disabled value="">Seleccione...</option>
-                  <option>CO2022</option>
-                  <option>PO2023_OBS</option>
-                  <option>PO2023_REIP</option>
-                  <option>PO2023_REIP_Cliente</option>
-                  <option>PO2023_RELH</option>
+                  <option>CO2021</option>
+                  <option>PO2022_OBS</option>
+                  <option>PO2022_REIP</option>
+                  <option>PO2022_REIP_Cliente</option>
+                  <option>PO2022_RELH</option>
                 </select>
             </div>
         </div>
@@ -109,10 +109,9 @@
   
       <div class="mb-3">
         <label for="validationTextarea" class="form-label"></label>
-        <span class="input-group-text" id="validationTooltipUsernamePrepend">Observacion PO2023:</span>
+        <span class="input-group-text" id="validationTooltipUsernamePrepend">Observacion PO2022:</span>
         <textarea class="form-control is-invalid" id="validationTextarea" name="obspo" placeholder="Detalle de observacion (Requerido)" required></textarea>
       </div>
-      
 
   <div class="col-12">
     <button class="btn btn-primary" type="submit">Guardar Registro</button>
@@ -156,7 +155,7 @@
 <!-- ###TABLA LISTA DATOS### --> 
 <div class="col-sm">
   <!-- ###EXPORTACION DE DATOS### --> 
-  <form action="/download?po={{po}}" method = "POST">
+  <form action="/download" method = "GET">
     <button id="exportar" type="submit">Exportar tabla de datos</button>
   </form>
   
@@ -196,7 +195,7 @@
             <td><dd>{{dato['ID']}}</dd></td>
             <td><dd>{{dato['Tipo RE']}}</dd></td>
             <td><dd>{{dato['Key']}}</dd></td>
-            <td><dd>{{dato['PO2023']}}</dd></td> <!-- Cambia con cada PO -->
+            <td><dd>{{dato['PO2022']}}</dd></td>
             <td><dd>{{dato['Accion_Planif']}}</dd></td>
             <td><dd>{{dato['Config Obj Planif']}}</dd></td>
             <td><dd>{{dato['Region']}}</dd></td>
@@ -226,7 +225,7 @@
         </td>         --> 
             <td><dd>{{dato['Integrador']}}</dd></td>
             <td>
-              <Form action="/edit/{{dato['_id']}}?po={{po}}" method="POST"> 
+              <Form action="/edit/{{dato['_id']}}" method="POST"> 
                 <input type="submit" class="btn btn-sm btn-primary btn-success" value="Edit">
               </form>
               <!--<a href="/delete/{{dato}}" class="btn btn-sm btn-danger btn-delete">delete</a> -->
