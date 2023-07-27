@@ -101,7 +101,7 @@ def create_graph():
     valores_pendientes.append(pendientes)
 
     ##Busco data del grafico Torta para API desde la DB - ARMAR FUNCION
-    for user in collection.find({"Estado General": {"$exists": True}}):
+    for user in collection.find( { "$and": [{"Estado General": {"$exists": True}}, {"Escenario":"Base"}]}):
         if (user["Estado General"] == "No Iniciado"):
             estadoGral_NI += 1
         elif (user["Estado General"] == "En Construccion"):
@@ -194,7 +194,8 @@ def Index():
       listaheads = list(datolista[0].keys())
       return flask.render_template("index.html",
                                    datos=datolista,
-                                   heads=listaheads)
+                                   heads=listaheads,
+                                   po=po)
       
     else: #Al no recibir datos por URL perteneciente al PO utilizo la BD del PO actual
       for document in collection.find({}):
@@ -204,7 +205,8 @@ def Index():
       listaheads = list(datolista[0].keys())
       return flask.render_template("index.html",
                                      datos=datolista,
-                                     heads=listaheads)
+                                     heads=listaheads,
+                                     po="2023")
 
 @app.route("/imadmin", methods=['GET', 'POST'])
 def Index_admin():
@@ -232,7 +234,7 @@ def Index_admin():
       return flask.render_template("index_admin.html",
                                    datos=datolista,
                                    heads=listaheads,
-                                   po="")
+                                   po="2023")
 
 @app.route('/edit/<id>', methods=['POST', 'GET'])
 def get_data(id):
@@ -371,7 +373,8 @@ def agrega_pedido():
             "MesProgramado (Calculada)": "nan",
             "Fecha liberación": "nan",
             "Mes liberado (Calculado)": "nan",
-            "Integrador": "nan"
+            "Integrador": "nan",
+            "Escenario": "Base"
         }
 
     #Inserto en la DB los nuevos valores
@@ -397,7 +400,11 @@ def post():
               index = 1
           else:
               pass
-
+          #Armo lista de lista de valores del archivo csv [rows]
+          listOfValues = document.values()
+          listOfValues = list(listOfValues)
+          csvList.append(listOfValues)
+        
     else: #capturo datos por URL perteneciente al PO y defino que BD utilizar
       #Consulto la DB para armar los datos a enviar al exportador de CSV
       for document in collection.find({}):
@@ -408,11 +415,11 @@ def post():
               index = 1
           else:
               pass
-            
-    #Armo lista de lista de valores del archivo csv [rows]
-    listOfValues = document.values()
-    listOfValues = list(listOfValues)
-    csvList.append(listOfValues)
+          #Armo lista de lista de valores del archivo csv [rows]
+          listOfValues = document.values()
+          listOfValues = list(listOfValues)
+          csvList.append(listOfValues)
+
     #Comienzo con la exportacion del CSV
     si = StringIO()
     cw = csv.writer(si)

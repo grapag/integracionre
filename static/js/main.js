@@ -19,10 +19,12 @@ xhttp.onreadystatechange = function() {
     .then(data => {
       //Calculo de valores para liberacion mensual agrupada
       var liberacionxmes = [];
+      var totalenlaces;
       for(i = 0; i < 12; i++){
         liberacionxmes[i] = data["ebarbero_prodxmes"][i] + data["jvilar_prodxmes"][i] + data["alorenzo_prodxmes"][i] + data["jschmukler_prodxmes"][i];
+      totalenlaces = data["estadoGral_NI"]+data["estadoGral_EC"]+data["estadoGral_EL"]+data["estadoGral_LI"]+data["estadoGral_PE"];
       }
-      
+    
       //createChart(data); //Funcion que crea el gráfico con los datos actualizados
       //CREACION DE BAR CHART PROGRAMACION
           Highcharts.chart('container_barChart', {
@@ -223,7 +225,7 @@ xhttp.onreadystatechange = function() {
         type: 'pie',
       },
       title: {
-        text: 'Estado General'
+        text: 'Estado General'+'<br>Enlaces[Capex Base]:'+totalenlaces
       },
       accessibility: {
         point: {

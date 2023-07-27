@@ -1,6 +1,6 @@
 import pymongo
 #from bson.objectid import ObjectId
-
+'''
 # CONEXION A MONGODB ATLAS
 client = pymongo.MongoClient("mongodb+srv://ggrapunsky:Tiburonloco12@cluster0.hzt0u.mongodb.net/bdreip?retryWrites=true&w=majority")
 db = client["bdreip"]
@@ -26,3 +26,45 @@ collection.update_many({}, {"$rename": {"Fecha liberación_renombrar6":"Fecha li
 collection.update_many({}, {"$rename": {"Mes liberado (Calculado)_renombrar7":"Mes liberado (Calculado)"}})
 collection.update_many({}, {"$rename": {"Integrador_renombrar8":"Integrador"}})
 collection.update_many({}, {"$rename": {"Escenario_renombrar9":"Escenario"}})
+
+
+'''
+# CONEXION A MONGODB ATLAS
+client = pymongo.MongoClient("mongodb+srv://ggrapunsky:Tiburonloco12@cluster0.hzt0u.mongodb.net/bdreip?retryWrites=true&w=majority")
+db = client["bdreip"]
+collection = db["PO2023"]
+
+#Filtros
+filter={
+    'Escenario': {
+        '$all': [
+            'Base'
+        ]
+    }
+}
+
+#Filtro con valores NULL se escribe como None
+filter2={
+    'Escenario': None
+}
+
+#Resultados
+result = collection.find(filter=filter)
+result2 = collection.find(filter=filter2)
+
+contador = 0
+for dato in result:
+  #print(dato)
+  contador+=1
+
+print("Escenarios Base:",contador)
+
+contador = 0
+for dato in result2:
+  #print(dato)
+  collection.update_one(dato, { "$set": { "Escenario":"Base"}})
+  contador+=1
+
+print("Escenarios Vacíos:",contador)
+  
+  
