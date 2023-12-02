@@ -264,7 +264,7 @@ xhttp.onreadystatechange = function() {
       },
       series: [{
         name: 'Cantidad',
-        colorByPoint: true,
+        colors: ['#24CBE5', '#000FDF', '#DDDF00', '#50B432', '#ED561B'],
         data: [{
           name: 'No Iniciado',
           y: data["estadoGral_NI"],

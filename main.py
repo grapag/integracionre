@@ -101,7 +101,7 @@ def create_graph():
     valores_pendientes.append(pendientes)
 
     ##Busco data del grafico Torta para API desde la DB - ARMAR FUNCION
-    for user in collection.find( { "$and": [{"Estado General": {"$exists": True}}, {"Escenario":"Base"}]}):
+    for user in collection.find( { "$and": [{"Estado General": {"$exists": True}}, { "$or": [{"Escenario":"Base"}, {"Estado General":"Liberado"} ]}]}):
         if (user["Estado General"] == "No Iniciado"):
             estadoGral_NI += 1
         elif (user["Estado General"] == "En Construccion"):
